@@ -3,14 +3,19 @@ package main
 type cliCommand struct {
 	name	string
 	description	string
-	callback	func() error
+	callback	func(*config) error
 
 }
 
-var commandMap map[string]cliCommand
+type config struct {
+	next string
+	previous string
+}
+
+var commandList map[string]cliCommand
 
 func init(){
-	commandMap = map[string]cliCommand{
+	commandList = map[string]cliCommand{
 	"exit": {
 		name:	"exit",
 		description: "Exit the Pokedex",
@@ -22,5 +27,17 @@ func init(){
 		description: "Displays a help message",
 		callback: commandHelp,
 	},
+	
+	"map": {
+		name: "map",
+		description: "Displays the names of 20 location areas in the Pokemon world",
+		callback: commandMap,
+	},
+	"mapb": {
+		name: "mapb",
+		description: "Displays the names of the previous 20 location areas",
+		callback: commandMapB,
+	},
+
 	}
 }

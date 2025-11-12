@@ -12,17 +12,74 @@ func cleanInput(text string) []string {
 	return strings.Fields(cleanText)
 }
 
-func commandExit() error {
+func commandExit(cfg *config) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
 
-func commandHelp() error {
+func commandHelp(cfg *config) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:\n")
-	for _, cmd := range commandMap{
+	for _, cmd := range commandList{
 		fmt.Printf("%s:%s\n", cmd.name, cmd.description)
 	}
 	return nil
+}
+
+func commandMap(cfg *config) error {
+	url := cfg.next
+	if url == "" {
+		url = "https://pokeapi.co/api/v2/location-area/"
+	
+	} 
+	
+	page, err := fetchLocationAreaPage(url)
+	if err != nil{
+		return err
+	} 
+	for _, r := range page.Results{
+		fmt.Println(r.Name)
+	}
+
+	if page.Next != nil {
+        cfg.next = *page.Next
+    } else {
+        cfg.next = ""
+    }
+    if page.Previous != nil {
+        cfg.previous = *page.Previous
+    } else {
+        cfg.previous = ""
+    }
+    return nil
+}
+
+func commandMapB (cfg *config) error {
+	if cfg.previous == "" {
+		fmt.Println("You are on the first page")
+		return nil
+	}
+
+	page, err := fetchLocationAreaPage(cfg.previous)
+	if err != nil {
+		return err
+	}
+	
+	for _, r := range page.Results{
+		fmt.Println(r.Name)
+	}
+
+	if page.Next != nil {
+        cfg.next = *page.Next
+    } else {
+        cfg.next = ""
+    }
+    if page.Previous != nil {
+        cfg.previous = *page.Previous
+    } else {
+        cfg.previous = ""
+    }
+    return nil
+
 }
