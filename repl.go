@@ -38,26 +38,13 @@ func commandMap(cfg *config) error {
 	if err != nil{
 		return err
 	} 
-	for _, r := range page.Results{
-		fmt.Println(r.Name)
-	}
-
-	if page.Next != nil {
-        cfg.next = *page.Next
-    } else {
-        cfg.next = ""
-    }
-    if page.Previous != nil {
-        cfg.previous = *page.Previous
-    } else {
-        cfg.previous = ""
-    }
+	printAndUpdate(cfg, page)
     return nil
 }
 
 func commandMapB (cfg *config) error {
 	if cfg.previous == "" {
-		fmt.Println("You are on the first page")
+		fmt.Println("You're on the first page")
 		return nil
 	}
 
@@ -65,21 +52,7 @@ func commandMapB (cfg *config) error {
 	if err != nil {
 		return err
 	}
-	
-	for _, r := range page.Results{
-		fmt.Println(r.Name)
-	}
-
-	if page.Next != nil {
-        cfg.next = *page.Next
-    } else {
-        cfg.next = ""
-    }
-    if page.Previous != nil {
-        cfg.previous = *page.Previous
-    } else {
-        cfg.previous = ""
-    }
+	printAndUpdate(cfg, page)
     return nil
 
 }
