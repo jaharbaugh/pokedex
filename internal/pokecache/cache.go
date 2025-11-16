@@ -18,8 +18,8 @@ type cacheEntry struct {
 
 func NewCache(interval time.Duration) *Cache {
 	cache := &Cache{
-		dict:= make(map[string]cacheEntry)
-		mut: &sync.RWMutex{}
+		dict: make(map[string]cacheEntry),
+		mut: &sync.RWMutex{},
 	}
 
 	go cache.reapLoop(interval)
@@ -47,7 +47,7 @@ func (c *Cache) Get(key string) ([]byte, bool){
 
 func (c *Cache) reapLoop(interval time.Duration){
 	ticker := time.NewTicker(interval)
-	for range := ticker.C {
+	for range ticker.C {
 		c.reap(interval)
 	}
 }

@@ -34,7 +34,7 @@ func commandMap(cfg *config) error {
 	
 	} 
 	
-	page, err := fetchLocationAreaPage(url)
+	page, err := fetchLocationAreaPage(cfg.client, url)
 	if err != nil{
 		return err
 	} 
@@ -48,7 +48,7 @@ func commandMapB (cfg *config) error {
 		return nil
 	}
 
-	page, err := fetchLocationAreaPage(cfg.previous)
+	page, err := fetchLocationAreaPage(cfg.client, cfg.previous)
 	if err != nil {
 		return err
 	}

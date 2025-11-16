@@ -1,5 +1,9 @@
 package main
 
+import (
+	"github.com/jaharbaugh/pokedex/internal/pokeapi"
+)
+
 type cliCommand struct {
 	name	string
 	description	string
@@ -10,6 +14,7 @@ type cliCommand struct {
 type config struct {
 	next string
 	previous string
+	client *pokeapi.Client
 }
 
 var commandList map[string]cliCommand

@@ -3,7 +3,7 @@ package main
 import(
 	"fmt"
 	"encoding/json"
-	"api/internal/pokeapi"
+	"github.com/jaharbaugh/pokedex/internal/pokeapi"
 )
 
 type locationAreaList struct{
@@ -18,7 +18,7 @@ type locationAreaList struct{
 
 func fetchLocationAreaPage(c *pokeapi.Client, url string) (locationAreaList, error){
 	
-	body, err := c.get(url)
+	body, err := c.GetBytes(url)
 	
 	if err != nil{
 		return locationAreaList{}, err

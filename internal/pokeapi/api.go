@@ -1,7 +1,7 @@
 package pokeapi
 
 import (
-	"cache/internal/pokecache"
+	"github.com/jaharbaugh/pokedex/internal/pokecache"
 	"net/http"
 	"io"
 )
@@ -21,10 +21,10 @@ func NewClient(URL string, c *pokecache.Cache) *Client {
 	
 }
 
-func (c *Client) get(url string) ([]byte, error) {
-	if val, ok := c.cache.Get(url){
+func (c *Client) GetBytes(url string) ([]byte, error) {
+	val, ok := c.cache.Get(url)
+	if ok {
 		return val, nil
-
 	}
 	
 	res, err := c.http.Get(url)
