@@ -58,6 +58,11 @@ func init(){
 		description: "View information about the pokemon you have captured",
 		callback: commandInspect,
 	},
+	"pokedex": {
+		name: "pokedex",
+		description: "View a list of all pokemon captured",
+		callback: commandPokedex,
+	},
 	
 	}
 }

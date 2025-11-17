@@ -68,8 +68,8 @@ func commandExplore(cfg *config, args []string) error {
 	}
 	fmt.Printf("Exploring %s...\n", location)
 	fmt.Println("Found Pokemon:")
-	for _, e := range pokelist.PokemonEncounters{
-		fmt.Println(" -", e.Pokemon.Name)
+	for _, i := range pokelist.PokemonEncounters{
+		fmt.Println(" -", i.Pokemon.Name)
 	}
 
 	return nil
@@ -115,7 +115,14 @@ func commandInspect(cfg *config, args[]string) error {
 	for _, i := range(target.Types){
 		fmt.Printf("	- %s\n", i.Type.Name)
 	}
-
 	
+	return nil
+}
+
+func commandPokedex(cfg *config, args[]string) error {
+	fmt.Println("Your Pokeddex:")
+	for k, _ := range someonesPC{
+		fmt.Printf("	- %s\n", k)
+	}
 	return nil
 }
