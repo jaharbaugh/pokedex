@@ -74,3 +74,48 @@ func commandExplore(cfg *config, args []string) error {
 
 	return nil
 }
+
+func commandCatch(cfg *config, args[]string) error{
+	if len(args) < 1{
+		return fmt.Errorf("Invalid target")
+	}
+	targetPokemon := args[0]
+	url := "https://pokeapi.co/api/v2/pokemon/" + targetPokemon
+
+	target, err := fetchPokemonData(cfg.client, url)
+	if err != nil {
+		return err
+	}
+	
+	fmt.Printf("Throwing a Pokeball at %s...\n", targetPokemon)
+	CatchAttempt(target)
+
+	return nil
+}
+
+func commandInspect(cfg *config, args[]string) error {
+	if len(args) < 1{
+		return fmt.Errorf("Invalid request")
+	}
+
+	pokemonName := args[0]
+
+	target, exists := someonesPC[pokemonName]
+    	if !exists {
+        	return fmt.Errorf("you have not caught that pokemon")
+    	}
+	fmt.Printf("Name: %s\n", target.Name)
+	fmt.Printf("Height: %d\n", target.Height)
+	fmt.Printf("Weight: %d\n", target.Weight)
+	fmt.Println("Stats:")
+	for _, i := range(target.Stats){
+		fmt.Printf("	-%s: %d\n", i.Stat.Name, i.BaseStat)
+	}
+	fmt.Println("Types:")
+	for _, i := range(target.Types){
+		fmt.Printf("	- %s\n", i.Type.Name)
+	}
+
+	
+	return nil
+}

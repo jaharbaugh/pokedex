@@ -48,6 +48,16 @@ func init(){
 		description: "Displays the pokemon that can be found at a map location",
 		callback: commandExplore,
 	},
-
+	"catch": {
+		name: "catch",
+		description: "Throw a pokeball and try to catch a pokemon",
+		callback: commandCatch,
+	},
+	"inspect": {
+		name: "inspect",
+		description: "View information about the pokemon you have captured",
+		callback: commandInspect,
+	},
+	
 	}
 }
