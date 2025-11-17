@@ -120,7 +120,7 @@ func commandInspect(cfg *config, args[]string) error {
 }
 
 func commandPokedex(cfg *config, args[]string) error {
-	fmt.Println("Your Pokeddex:")
+	fmt.Println("Your Pokedex:")
 	for k, _ := range someonesPC{
 		fmt.Printf("	- %s\n", k)
 	}
