@@ -12,13 +12,13 @@ func cleanInput(text string) []string {
 	return strings.Fields(cleanText)
 }
 
-func commandExit(cfg *config) error {
+func commandExit(cfg *config, args []string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
 
-func commandHelp(cfg *config) error {
+func commandHelp(cfg *config, args []string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	for _, cmd := range commandList{
@@ -27,7 +27,7 @@ func commandHelp(cfg *config) error {
 	return nil
 }
 
-func commandMap(cfg *config) error {
+func commandMap(cfg *config, args []string) error {
 	url := cfg.next
 	if url == "" {
 		url = "https://pokeapi.co/api/v2/location-area/"
@@ -42,7 +42,7 @@ func commandMap(cfg *config) error {
     return nil
 }
 
-func commandMapB (cfg *config) error {
+func commandMapB(cfg *config, args []string) error {
 	if cfg.previous == "" {
 		fmt.Println("You're on the first page")
 		return nil
@@ -54,5 +54,23 @@ func commandMapB (cfg *config) error {
 	}
 	printAndUpdate(cfg, page)
     return nil
+}
 
+func commandExplore(cfg *config, args []string) error {
+	if len(args) < 1{
+		return fmt.Errorf("Invalid location")
+	}
+	location := args[0]
+	url := ("https://pokeapi.co/api/v2/location-area/" + location)
+	pokelist, err := fetchLocationPokemon(cfg.client, url)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Exploring %s...\n", location)
+	fmt.Println("Found Pokemon:")
+	for _, e := range pokelist.PokemonEncounters{
+		fmt.Println(" -", e.Pokemon.Name)
+	}
+
+	return nil
 }

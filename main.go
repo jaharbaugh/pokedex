@@ -22,20 +22,25 @@ func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
-		fmt.Print("Pokedex > ")
-		scanner.Scan()
-		input := scanner.Text()
-		words := cleanInput(input)
-		if len(words) == 0{
-			continue
-		}
+    	fmt.Print("Pokedex > ")
+    	scanner.Scan()
+    	input := scanner.Text()
+    	tokens := cleanInput(input)
+    	if len(tokens) == 0 {
+        	continue
+    	}
 
-		if cmd, exists := commandList[words[0]]; exists {
-			if err := cmd.callback(cfg); err != nil{
-				fmt.Println("Error: ", err)
-			}
-		} else{
-				fmt.Println("Unknown command")
-		}
-	}
+    	name := tokens[0]
+    	args := tokens[1:]
+
+    	cmd, exists := commandList[name]
+    	if !exists {
+        	fmt.Println("Unknown command")
+        	continue
+    	}
+
+    	if err := cmd.callback(cfg, args); err != nil {
+        	fmt.Println("Error:", err)
+    }
+}
 }
